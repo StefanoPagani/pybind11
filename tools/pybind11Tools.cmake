@@ -20,10 +20,10 @@ include(CMakeParseArguments)
 
 if(NOT PYBIND11_CPP_STANDARD AND NOT CMAKE_CXX_STANDARD)
   if(NOT MSVC)
-    check_cxx_compiler_flag("-std=c++14" HAS_CPP14_FLAG)
+    check_cxx_compiler_flag("-std=c++17" HAS_CPP17_FLAG)
 
-    if (HAS_CPP14_FLAG)
-      set(PYBIND11_CPP_STANDARD -std=c++14)
+    if (HAS_CPP17_FLAG)
+      set(PYBIND11_CPP_STANDARD -std=c++17)
     else()
       check_cxx_compiler_flag("-std=c++11" HAS_CPP11_FLAG)
       if (HAS_CPP11_FLAG)
@@ -33,11 +33,11 @@ if(NOT PYBIND11_CPP_STANDARD AND NOT CMAKE_CXX_STANDARD)
       endif()
     endif()
   elseif(MSVC)
-    set(PYBIND11_CPP_STANDARD /std:c++14)
+    set(PYBIND11_CPP_STANDARD /std:c++17)
   endif()
 
   set(PYBIND11_CPP_STANDARD ${PYBIND11_CPP_STANDARD} CACHE STRING
-      "C++ standard flag, e.g. -std=c++11, -std=c++14, /std:c++14.  Defaults to C++14 mode." FORCE)
+      "C++ standard flag, e.g. -std=c++11, -std=c++17, /std:c++17.  Defaults to C++17 mode." FORCE)
 endif()
 
 # Checks whether the given CXX/linker flags can compile and link a cxx file.  cxxflags and
@@ -184,7 +184,7 @@ function(pybind11_add_module target_name)
     endif()
   endif()
 
-  # Make sure C++11/14 are enabled
+  # Make sure C++11/17 are enabled
   if(CMAKE_VERSION VERSION_LESS 3.3)
     target_compile_options(${target_name} PUBLIC ${PYBIND11_CPP_STANDARD})
   else()
